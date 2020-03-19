@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light main">
+    <div class=" pb-0 d-flex w-100 justify-content-between">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <div class="d-flex">
+            <div class="row">
+                <div class="col">
+                    <div ngbDropdown display="dynamic" class="d-inline-block">
+                        <button ngbDropdownToggle class="btn btn-primary">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button  ngbDropdownItem [routerLink]="'/auth/sign-up'">SignUp</button>
+                            <button  ngbDropdownItem [routerLink]="'/auth/sign-in'">LogIn</button>
+                            <button  ngbDropdownItem [routerLink]="['/admin/create-patient']">Patient</button>
+                            <button  ngbDropdownItem (click)="logOut()">LogOut</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

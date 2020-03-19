@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'; */
+
+
+/* @import './assets/scss/components.scss';
+@import './assets/scss/themes/dark-layout.scss';
+@import './assets/scss/themes/semi-dark-layout.scss';
+@import './assets/scss/bootstrap.scss';
+@import './assets/scss/bootstrap-extended.scss';
+@import './assets/scss/core/menu/menu-types/vertical-menu.scss';
+@import './assets/scss/pages/dashboard-ecommerce.scss';
+@import './assets/scss/plugins/extensions/swiper.scss';
+@import './assets/scss/plugins/file-uploaders/dropzone.scss';
+@import './assets/scss/colors.scss';
+@import './assets/scss/main.scss';
+/* @import './assets/scss/pages/app-email.scss'; */
+@import './assets/scss/pages/auth.scss';
+@import "../node_modules/font-awesome/css/font-awesome.css";
+/* @import "~bootstrap/dist/css/bootstrap.min.css" */
+
