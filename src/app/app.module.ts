@@ -10,7 +10,7 @@ import { MainLayoutComponent } from './content/main-layout/main-layout.component
 import { NavbarComponent } from './navbar/navbar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AmplifyService, AmplifyAngularModule } from 'aws-amplify-angular';
-
+import { AuthInterceptor }  from './helpers/auth.interceptor'
 
 @NgModule({
   declarations: [
@@ -30,7 +30,13 @@ import { AmplifyService, AmplifyAngularModule } from 'aws-amplify-angular';
     HttpClientModule,
     AmplifyAngularModule
   ],
-  providers: [ AmplifyService ],
+  providers: [ 
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: AuthInterceptor
+    },
+    AmplifyService ],
 
   bootstrap: [AppComponent]
 })

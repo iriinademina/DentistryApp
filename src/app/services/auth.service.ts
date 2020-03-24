@@ -44,5 +44,9 @@ export class AuthService {
         await Auth.signOut();
         this.statusLoggedIn = false
     }
+
+    async getToken() {
+      return await (await Auth.currentSession()).getIdToken().getJwtToken();
+    }
   }
 

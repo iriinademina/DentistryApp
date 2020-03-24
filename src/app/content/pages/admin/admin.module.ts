@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CreatePatientComponent } from './create-patient/create-patient.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './shared/components/admin-layout/admin-layout.component';
+import { PatientMainComponent } from './patient-main/patient-main.component';
 
 const routes: Routes = [
     {
@@ -18,7 +19,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [CreatePatientComponent, AdminLayoutComponent],
+    declarations: [CreatePatientComponent, AdminLayoutComponent, PatientMainComponent],
     imports: [CommonModule, RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
