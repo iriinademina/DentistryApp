@@ -6,10 +6,10 @@ import Amplify from 'aws-amplify';
 
 Amplify.configure({
   Auth: {
-    region: 'region',
-    userPoolId: 'your userPoolId',
-    userPoolWebClientId: 'your userPoolWebClientId',
-    mandatorySignIn: true
+    region: 'XX',
+    userPoolId: 'XXX',
+    userPoolWebClientId: 'XXX',
+    mandatorySignIn: true,
   }
 });
 

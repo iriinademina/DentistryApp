@@ -26,7 +26,7 @@ export class SignInComponent implements OnInit {
         this.signInForm.value.email,
         this.signInForm.value.password,
       );
-      this._router.navigate(['admin/create-patient']);
+      this._router.navigate(['admin/create-user']);
     } catch (err) {
       console.log(err);
     }

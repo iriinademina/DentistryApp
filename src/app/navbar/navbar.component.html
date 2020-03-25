@@ -1,22 +1,54 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light main">
-    <div class=" pb-0 d-flex w-100 justify-content-between">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <div class="d-flex">
-            <div class="row">
-                <div class="col">
-                    <div ngbDropdown display="dynamic" class="d-inline-block">
-                        <button ngbDropdownToggle class="btn btn-primary">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button  ngbDropdownItem [routerLink]="'/auth/sign-up'">SignUp</button>
-                            <button  ngbDropdownItem [routerLink]="'/auth/sign-in'">LogIn</button>
-                            <button  ngbDropdownItem [routerLink]="['/admin/create-patient']">Patient</button>
-                            <button  ngbDropdownItem (click)="logOut()">LogOut</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light main pb-0">
+  <div class=" pb-0 d-flex w-100 justify-content-between ">
+    <div class="row">
+      <a class="navbar-brand" [routerLink]="['/']">DenT</a>
+      <form class="form-inline flex-nowrap my-2 mr-lg-0 ">
+        <input
+          type="text"
+          class="form-control mr-sm-2"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <a><i class="fa fa-search" aria-hidden="true"></i></a>
+      </form>
     </div>
+    <div class="row flex-nowrap">
+      <ul class="navbar-nav flex-row mr-2">
+        <li class="nav-item active mr-2 pb-0">
+          <a [routerLink]="'/auth/sign-up'" class="d-flex">
+            <i class="fa fa-lock align-self-center" aria-hidden="true"></i>
+            <span class="nav-link d-none d-md-block align-self-center"
+              >SignUp</span
+            >
+          </a>
+        </li>
+        <li class="nav-item active pb-0">
+          <a [routerLink]="['/']" class="d-flex">
+            <i class="fa fa-home align-self-center" aria-hidden="true"></i>
+            <span class="nav-link d-none d-md-block">Home</span>
+          </a>
+        </li>
+      </ul>
+      <div class="col pl-0">
+        <div ngbDropdown display="dynamic" class="d-inline-block">
+          <img
+            ngbDropdownToggle
+            class="rounded-circle cursor-pointer "
+            src="..//../assets/images/avatar.jpg"
+            height="40"
+            width="40"
+          />
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem [routerLink]="'/auth/sign-in'">
+              LogIn
+            </button>
+            <button ngbDropdownItem [routerLink]="['/admin/create-user']">
+              Create User
+            </button>
+            <button ngbDropdownItem (click)="logOut()">LogOut</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </nav>
