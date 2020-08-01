@@ -4,9 +4,3 @@ export interface User {
     password: string;
   }
   
-
-  export interface CompareData {
-    age: number;
-    height: number;
-    income: number;
-  }

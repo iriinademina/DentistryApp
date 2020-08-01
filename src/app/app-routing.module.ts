@@ -7,18 +7,17 @@ const AppRoutes: Routes = [
     {
         path: '',
         component: MainLayoutComponent,
-        
         children: [
             {
                 path: 'admin',
                 canActivate: [AuthGuard],
                 loadChildren: () => import ('./content/pages/admin/admin.module').then (module => module.AdminModule)
+            },
+            {
+                path: 'auth', 
+                loadChildren: () => import ('./content/pages/auth/auth.module').then (module => module.AuthModule)
             }
         ]
-    },
-    {
-        path: 'auth', 
-        loadChildren: () => import ('./content/pages/auth/auth.module').then (module => module.AuthModule)
     }
 ]
 

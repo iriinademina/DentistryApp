@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,11 @@ import { MainLayoutComponent } from './content/main-layout/main-layout.component
 import { NavbarComponent } from './navbar/navbar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AmplifyService, AmplifyAngularModule } from 'aws-amplify-angular';
-import { AuthInterceptor }  from './helpers/auth.interceptor'
+import { AuthInterceptor }  from './helpers/auth.interceptor';
+// import { UploadFileComponent } from './shared/components/upload-file/upload-file.component'
+import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { AuthInterceptor }  from './helpers/auth.interceptor'
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AmplifyAngularModule
+    AmplifyAngularModule,
+    SharedModule,
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot()
+    
   ],
   providers: [ 
     {

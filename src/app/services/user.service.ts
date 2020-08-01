@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { CompareData } from '../shared/models/user.model'
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -13,15 +12,33 @@ export class UserService {
     );
   }
 
-  addDataUser (data : CompareData) {
-    return this.http.post<CompareData>(
+  addDataUser (data : any) {
+    return this.http.post<any>(
       'https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry',
        data
     );
   }
 
   deleteDataUsers () {
-    return this.http.delete<CompareData>(
+    return this.http.delete<any>(
       ' https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry');
+  }
+
+  uploadFile (file) {
+    return this.http.post<any>(
+      ' https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry/upload-file',
+      file, {
+        params: new HttpParams().set('fileName', file.name),
+        reportProgress: true
+      });
+  }
+
+  getFile (file) {
+    return this.http.get<any>(
+      '  https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry/upload-file',
+       {
+        params: new HttpParams().set('fileName', file.name),
+        reportProgress: true
+      });
   }
 }

@@ -4,6 +4,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './shared/components/admin-layout/admin-layout.component';
 import { UserMainComponent } from './user-main/user-main.component';
+import { SharedModule } from '../../../shared/shared.module';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 const routes: Routes = [
     {
@@ -11,16 +13,21 @@ const routes: Routes = [
         component: AdminLayoutComponent,
         children: [
             {
-                path: 'create-user',
-                component: CreateUserComponent,
+                path: 'users',
+                component: UserMainComponent
             },
+            {
+                path: 'create-user',
+                component: CreateUserComponent
+            }
         ],
     },
 ];
 
 @NgModule({
     declarations: [CreateUserComponent, AdminLayoutComponent, UserMainComponent],
-    imports: [CommonModule, RouterModule.forChild(routes)],
-    exports: [RouterModule],
+    imports: [CommonModule, SharedModule, RouterModule.forChild(routes)
+    , BsDatepickerModule.forRoot()],
+    exports: [RouterModule,   BsDatepickerModule],
 })
 export class AdminModule {}

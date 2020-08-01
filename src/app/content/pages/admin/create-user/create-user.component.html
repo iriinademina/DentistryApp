@@ -1,3 +1,70 @@
+<div class="row justify-content-center">
+  <div class="card col-10 p-0">
+    <div class="card-header bg-transparent">
+      Create your profile
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-2">
+          <img
+            class="rounded-circle cursor-pointer"
+            [src]="domain"
+            alt="user avatar"
+            height="150"
+            width="150"
+          />
+          <p class="card-text text-center">First name</p>
+        </div>
+      </div>
 
-<app-user-main></app-user-main>
+      <form class="col-md-10" [formGroup]="auth" role="name">
+        <label class="btn btn-default">
+          <input type="file" (change)="selectFile($event)" />
+        </label>
+
+        <button
+          class="btn btn-success"
+          [disabled]="!selectedFiles"
+          (click)="upload()"
+        >
+          Upload
+        </button>
+
+        <div class="form-group mb-50">
+          <input
+            type="text"
+            formControlName="firstName"
+            class="form-control"
+            placeholder="First Name"
+          />
+        </div>
+        <div class="form-group mb-50">
+          <input
+            type="text"
+            formControlName="lastName"
+            class="form-control"
+            placeholder="Last Name"
+          />
+        </div>
+        <!-- <div class="form-group mb-50">
+          <input
+            type="text"
+            placeholder="Datepicker"
+            class="form-control"
+            bsDatepicker
+          />
+        </div> -->
+        <div class="col-xs-12 col-12 col-md-4 form-group">
+          <input
+            type="text"
+            placeholder="Daterangepicker"
+            class="form-control"
+            bsDaterangepicker
+          />
+        </div>
+      </form>
+    </div>
+    <button class="btn btn-primary pull-right">Create User</button>
+  </div>
+</div>
 
