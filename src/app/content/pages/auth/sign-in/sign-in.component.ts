@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth.service';
+import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +12,11 @@ import { Router } from '@angular/router';
 export class SignInComponent implements OnInit {
   signInForm: FormGroup;
 
-  constructor(private _router: Router, private authService: AuthService) {}
+  constructor(
+    private _router: Router,
+     private authService: AuthService,
+     private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.signInForm = new FormGroup({
@@ -22,10 +27,13 @@ export class SignInComponent implements OnInit {
 
   async onSubmit() {
     try {
-      await this.authService.signIn(
+     const user = await this.authService.signIn(
         this.signInForm.value.email,
         this.signInForm.value.password,
       );
+      this.userService.fetchUserById(user.attributes.sub).subscribe(
+        data => console.log('user profile', data)
+      )
       this._router.navigate(['admin/create-user']);
     } catch (err) {
       console.log(err);

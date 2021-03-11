@@ -19,10 +19,11 @@ export class CreateUserComponent implements OnInit {
   message: string ;
   domain : string;
   selectedDate : any;
+  defaultImg: string
 
   constructor( private userService: UserService  ) {
-    this.domain = `${environment.domain}/cat.png`
-   }
+    this.defaultImg = '../../../../../assets/images/avatar.jpg'
+  }
 
   ngOnInit(): void {
     this.auth = new FormGroup({
@@ -36,7 +37,9 @@ export class CreateUserComponent implements OnInit {
 
   upload() {
     let file = this.selectedFiles
-    this.userService.uploadFile(file).subscribe(event => console.log(event))
+    this.userService.uploadFile(file).subscribe(data => {
+      console.log(data)
+    })
   }
     
     getData() {
@@ -45,7 +48,11 @@ export class CreateUserComponent implements OnInit {
       this.userService.getFile(
         this.selectedFiles
         ).subscribe(data => {
-          console.log(data)
+          console.log('file',data)
+          if (data) {
+            this.domain = data
+            // this.domain = `${environment.domain}/${this.selectedFiles.name}`
+          }   
         })
     }
 
@@ -56,5 +63,9 @@ export class CreateUserComponent implements OnInit {
 
     appearCalendar() {
     
+    }
+
+    create () {
+      console.log(this.auth.value)
     }
 }

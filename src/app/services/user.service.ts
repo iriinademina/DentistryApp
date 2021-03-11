@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpBackend } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  private endpoint_users : string;
+  constructor(private http: HttpClient, private httpBackend: HttpBackend) {
+    this.endpoint_users ="http://localhost:3000/users"
+  }
 
   fetchListUsers(): Observable<any> {
     return this.http.get<any>(
@@ -12,33 +15,46 @@ export class UserService {
     );
   }
 
-  addDataUser (data : any) {
+  addDataUser(data: any) {
     return this.http.post<any>(
       'https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry',
-       data
+      data,
     );
   }
 
-  deleteDataUsers () {
+  deleteDataUsers() {
     return this.http.delete<any>(
-      ' https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry');
+      ' https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry',
+    );
   }
 
-  uploadFile (file) {
+  uploadFile(file) {
     return this.http.post<any>(
       ' https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry/upload-file',
-      file, {
+      file,
+      {
         params: new HttpParams().set('fileName', file.name),
-        reportProgress: true
-      });
+        reportProgress: true,
+      },
+    );
   }
 
-  getFile (file) {
+  getFile(file) {
     return this.http.get<any>(
       '  https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry/upload-file',
-       {
+      {
         params: new HttpParams().set('fileName', file.name),
-        reportProgress: true
-      });
+        reportProgress: true,
+      },
+    );
+  }
+
+  createUser(data: any) {
+    const newHttpClient = new HttpClient(this.httpBackend);
+    return newHttpClient.post<any>(`${this.endpoint_users}`, data);
+  }
+
+  fetchUserById(id: string) {
+    return this.http.get<any>(`${this.endpoint_users}/${id}`);
   }
 }
