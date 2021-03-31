@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return fromPromise(this.auth.getToken()).pipe(
       switchMap(token => {
         if (token) {
-          console.log('interceptor')
+          console.log('interceptor', token)
           req = req.clone({
             setHeaders: {
               Authorization: `Bearer ${token}`,

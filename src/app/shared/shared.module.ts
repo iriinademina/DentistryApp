@@ -5,12 +5,13 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilestackModule } from '@filestack/angular';
 
+
 const modules = [
   CommonModule,
   RouterModule,
   FormsModule,
   ReactiveFormsModule,
-  FilestackModule
+  FilestackModule,
 ];
 
 @NgModule({

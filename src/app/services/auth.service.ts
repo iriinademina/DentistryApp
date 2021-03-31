@@ -4,6 +4,8 @@ import Auth from '@aws-amplify/auth';
 import { Hub } from '@aws-amplify/core';
 import { Subject, Observable } from 'rxjs';
 import { CognitoUser } from 'amazon-cognito-identity-js';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -12,6 +14,7 @@ export class AuthService {
     CognitoUser | any
   >();
   authState: Observable<CognitoUser | any> = this._authState.asObservable();
+  
 
   constructor() {
     Hub.listen('auth', (data) => {
@@ -49,4 +52,14 @@ export class AuthService {
   async getToken() {
     return await (await Auth.currentSession()).getIdToken().getJwtToken();
   }
+
+  async getAuthUserId () : Promise<any> {
+    const user = await Auth.currentAuthenticatedUser();
+    return user.attributes.sub
+  }
+
+  getCurrentUserId () : Observable<string> {
+    return fromPromise(this.getAuthUserId())
+  }
+
 }

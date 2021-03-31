@@ -11,17 +11,17 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AmplifyService, AmplifyAngularModule } from 'aws-amplify-angular';
 import { AuthInterceptor }  from './helpers/auth.interceptor';
-// import { UploadFileComponent } from './shared/components/upload-file/upload-file.component'
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { MainPageComponent } from './content/pages/main-page/main-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainLayoutComponent,
-    NavbarComponent
-   
+    NavbarComponent,
+    MainPageComponent,
   ],
   imports: [
     BrowserModule,

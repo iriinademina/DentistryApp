@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light main pb-0">
-  <div class=" pb-0 d-flex w-100 justify-content-between ">
+  <div class="pb-0 d-flex w-100 justify-content-between">
     <div class="row">
       <a class="navbar-brand" [routerLink]="['/']">DenT</a>
-      <form class="form-inline flex-nowrap my-2 mr-lg-0 ">
+      <form class="form-inline flex-nowrap my-2 mr-lg-0">
         <input
           type="text"
           class="form-control mr-sm-2"
@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="nav-item active pb-0">
-          <a [routerLink]="['/']" class="d-flex">
+          <a [routerLink]="['/home']" class="d-flex">
             <i class="fa fa-home align-self-center" aria-hidden="true"></i>
             <span class="nav-link d-none d-md-block">Home</span>
           </a>
@@ -33,11 +33,22 @@
         <div ngbDropdown display="dynamic" class="d-inline-block">
           <img
             ngbDropdownToggle
-            class="rounded-circle cursor-pointer "
-            src="..//../assets/images/avatar.jpg"
+            *ngIf="userAvatar$ | async as userAvatar ; else defaultAvatar"
+            class="rounded-circle cursor-pointer"
+            [src]="userAvatar"
             height="40"
             width="40"
           />
+          <ng-template #defaultAvatar>
+            <img
+              ngbDropdownToggle
+              class="rounded-circle cursor-pointer"
+              src="../../../../../assets/images/avatar.jpg"
+              alt="avatar"
+              height="40"
+              width="40"
+            />
+          </ng-template>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
             <button ngbDropdownItem [routerLink]="'/auth/sign-in'">
               LogIn
@@ -45,6 +56,7 @@
             <button ngbDropdownItem [routerLink]="['/admin/users']">
               Users
             </button>
+            <button ngbDropdownItem (click)="goOnProfile()">Profile</button>
             <button ngbDropdownItem (click)="logOut()">LogOut</button>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth.service';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sign-in',
@@ -31,10 +32,11 @@ export class SignInComponent implements OnInit {
         this.signInForm.value.email,
         this.signInForm.value.password,
       );
-      this.userService.fetchUserById(user.attributes.sub).subscribe(
-        data => console.log('user profile', data)
-      )
-      this._router.navigate(['admin/create-user']);
+      this.userService.fetchUserById(user.attributes.sub)
+      .pipe(first()).subscribe ( 
+        data => { console.log('user profile', data)
+        this._router.navigate(['/'])
+      });
     } catch (err) {
       console.log(err);
     }

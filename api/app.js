@@ -26,7 +26,7 @@ sequelize
   .then(user => {
      console.log(user);
   })
-  .then(cart => {
+  .then(user => {
     app.listen(3000);
   })
   .catch(err => {
