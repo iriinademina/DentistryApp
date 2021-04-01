@@ -42,12 +42,15 @@ export class ProfileUserComponent implements OnInit {
       .getCurrentUserId()
       .pipe(
         switchMap((id) => {
-          this.userId = id;
-          return this.userService.fetchUserById(this.userId);
+          return this.userService.fetchUserById(id);
         }),
+        map ( user => {
+          this.userId = user.id;
+          return user.avatarPath
+        })
       )
-      .subscribe((user) => {
-        this.domain = `${environment.domain}/${user.avatarPath}`;
+      .subscribe((avatar) => {
+        this.domain = `${environment.domain}/${avatar}`;
       });
   }
 
@@ -56,15 +59,16 @@ export class ProfileUserComponent implements OnInit {
     if (this.selectedFiles) {
       const formData = new FormData();
       formData.append('file', this.selectedFiles);
-    this.userService
+      this.userService
         .uploadImageProfile(this.userId, formData)
         .pipe(
-          switchMap (val => {
-          this.domain = `${environment.domain}/${val.avatarPath}`;
-          return this.userService.getUserAvatar()
-        }))
-        .subscribe( val => {
-          console.log('val',val)
+          map((user) => {
+            this.domain = `${environment.domain}/${user.avatarPath}`;
+            return this.domain;
+          }),
+        )
+        .subscribe((val) => {
+          console.log('val', val);
         });
     }
   }
