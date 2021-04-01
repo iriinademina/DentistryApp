@@ -4,7 +4,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { environment } from '../../../../../environments/aws.environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs-compat/Observable';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-user',
@@ -13,21 +13,14 @@ import { map, switchMap } from 'rxjs/operators';
 })
 export class ProfileUserComponent implements OnInit {
   public userInfo: FormGroup;
-  isEditing = false;
-  isLoadingForm = false;
   selectedFiles: File;
-  message: string;
   domain: string;
-  selectedDate: any;
-  defaultImg: string;
   userId: string;
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
-  ) {
-    this.defaultImg = '../../../../../assets/images/avatar.jpg';
-  }
+  ) {}
 
   ngOnInit(): void {
     this.userInfo = new FormGroup({
@@ -44,11 +37,12 @@ export class ProfileUserComponent implements OnInit {
         switchMap((id) => {
           return this.userService.fetchUserById(id);
         }),
-        map ( user => {
+        map((user) => {
           this.userId = user.id;
-          return user.avatarPath
-        })
+          return user.avatarPath;
+        }),
       )
+      .pipe(first())
       .subscribe((avatar) => {
         this.domain = `${environment.domain}/${avatar}`;
       });
@@ -61,14 +55,10 @@ export class ProfileUserComponent implements OnInit {
       formData.append('file', this.selectedFiles);
       this.userService
         .uploadImageProfile(this.userId, formData)
-        .pipe(
-          map((user) => {
-            this.domain = `${environment.domain}/${user.avatarPath}`;
-            return this.domain;
-          }),
-        )
-        .subscribe((val) => {
-          console.log('val', val);
+        .pipe(map((user) => user.avatarPath))
+        .pipe(first())
+        .subscribe((avatar) => {
+          this.domain = `${environment.domain}/${avatar}`;
         });
     }
   }
