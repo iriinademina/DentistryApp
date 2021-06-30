@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs-compat/Observable';
 import { UserService } from '../../../../services/user.service';
+import { AuthService } from '../../../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -10,22 +12,16 @@ import { map, switchMap } from 'rxjs/operators';
 })
 export class UserMainComponent implements OnInit {
 
-  userName: string;
   userName$ : Observable<string>;
-  domain : string;
-
+  isInfoUser: boolean;
+  userName: any;
+ 
   constructor(
-    private userService: UserService
-  ) { }
+    private userService: UserService,
 
-  ngOnInit(): void {
-    this.userName = 'Irina'
-    console.log('init user-main')
-    this.userService.getUserAvatar().subscribe(
-      data => {
-        console.log('name',data)}
-     
-    )
+  ) { 
+    this.isInfoUser = false;
   }
 
+  ngOnInit(): void {}
 }

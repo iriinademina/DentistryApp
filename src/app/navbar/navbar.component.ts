@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs-compat/Observable';
 import { map, switchMap, first } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,24 +14,29 @@ import { UserService } from '../services/user.service';
 export class NavbarComponent implements OnInit {
   userId: string;
   userAvatar$: Observable<any>;
+  userName: any;
   isAvatar: boolean;
+  isUserName: boolean;
  
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private activatedroute:ActivatedRoute,
     private _router: Router,
   ) {
     this.isAvatar = false;
+    this.isUserName = false;
   }
 
   ngOnInit(): void {
     this.userAvatar$ = this.userService.getUserAvatar().pipe(
       map((link) => {
-        this.isAvatar = true;
-        return link;
-      }),
+          this.isAvatar = true;
+          console.log('navbar link', link)
+          return link;
+        })
     );
-
+    
     if (!this.isAvatar) {
       this.authService
         .getCurrentUserId()

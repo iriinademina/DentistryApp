@@ -3,7 +3,6 @@ import { UserService } from '../../../../services/user.service';
 import { AuthService } from '../../../../services/auth.service';
 import { environment } from '../../../../../environments/aws.environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs-compat/Observable';
 import { map, switchMap, first } from 'rxjs/operators';
 
 @Component({
@@ -16,11 +15,15 @@ export class ProfileUserComponent implements OnInit {
   selectedFiles: File;
   domain: string;
   userId: string;
+  userName: string;
+  isEditing: boolean;
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
-  ) {}
+  ) {
+    this.isEditing = false;
+  }
 
   ngOnInit(): void {
     this.userInfo = new FormGroup({
@@ -39,12 +42,17 @@ export class ProfileUserComponent implements OnInit {
         }),
         map((user) => {
           this.userId = user.id;
+          this.userName = user.userName
           return user.avatarPath;
         }),
       )
       .pipe(first())
       .subscribe((avatar) => {
-        this.domain = `${environment.domain}/${avatar}`;
+        {
+          if (avatar) {
+            this.domain = `${environment.domain}/${avatar}`;
+        }
+      }
       });
   }
 
@@ -63,7 +71,7 @@ export class ProfileUserComponent implements OnInit {
     }
   }
 
-  create() {
+  createEditUser () {
     console.log(this.userInfo.value);
   }
 }

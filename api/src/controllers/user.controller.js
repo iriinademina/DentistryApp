@@ -14,11 +14,17 @@ async function updateImage(req, res) {
   const fileKey = await uploadSingleFile(req, res);
   let result = await service.updateUserAvatarPath(uid, fileKey);
   res.send(result);
-  console.log(result);
+}
+
+async function updateUserData (req, res) {
+  const uid = req.params.id;
+  let result = await service.updateUserData(uid, req.body);
+  res.send(result);
 }
 
 module.exports = {
   create,
   getUser,
   updateImage,
+  updateUserData
 };

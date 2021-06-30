@@ -15,12 +15,19 @@ const User = sequelize.define(
     },
     firstName: {
       type: Sequelize.STRING,
+      allowNull: true
     },
     lastName: {
-      type: Sequelize.UUID,
+      type: Sequelize.STRING,
+      allowNull: true
     },
     avatarPath: {
       type: Sequelize.STRING,
+      allowNull: true
+    },
+    speciality: {
+      type: Sequelize.STRING,
+      allowNull: true
     },
   },
   {

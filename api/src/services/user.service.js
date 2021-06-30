@@ -17,7 +17,7 @@ async function getUserById(uId) {
   try {
     const user = await models.findOne({
       where: { id: uId },
-      attributes: ['id', 'userName', 'avatarPath'],
+      attributes: ['id', 'userName', 'avatarPath', 'firstName', 'lastName', 'speciality'],
     });
     return user;
   } catch (err) {
@@ -28,7 +28,6 @@ async function getUserById(uId) {
 async function updateUserAvatarPath (id, fileKey) {
   try {
     const user = await getUserById(id);
-    console.log('user', user)
      if(user) {
       const result = await models.update(
         { avatarPath: fileKey },
@@ -42,11 +41,35 @@ async function updateUserAvatarPath (id, fileKey) {
     }} catch (err) {
       throw err;
     }
-    
+}
+
+async function updateUserData (id, userData) {
+  try {
+    const user = await getUserById(id);
+    const { firstName, lastName, speciality } = userData;
+     if(user) {
+      const result = await models.update(
+        { firstName, lastName, speciality },
+        { where: { id: id } }
+      )
+      const updatedUser = {
+        ...user,
+        firstName,
+        lastName,
+        speciality
+      }
+      return {  firstName: updatedUser.firstName,
+                lastName : updatedUser.lastName,
+                speciality: updatedUser.speciality
+      }
+    }} catch (err) {
+      throw err;
+    }
 }
 
 module.exports = {
   create,
   getUserById,
-  updateUserAvatarPath
+  updateUserAvatarPath,
+  updateUserData
 };

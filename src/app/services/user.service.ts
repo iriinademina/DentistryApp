@@ -8,10 +8,10 @@ import { environment } from '../../environments/aws.environment';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private endpoint_users : string;
-  private _userInfo: Subject<any> = new Subject<
-    any
-  >();
+  private _userInfo: Subject<any> = new Subject<any>();
+
   userInfo: Observable<any> = this._userInfo.asObservable();
+
 
   constructor(private http: HttpClient, private httpBackend: HttpBackend) {
     this.endpoint_users ="http://localhost:3000/users"
@@ -73,17 +73,20 @@ export class UserService {
 
   getUserAvatar() : Observable<any> {
     return this.userInfo.pipe(
-      map ( user => {
-        return `${environment.domain}/${user.avatarPath}`
-      }))
+      map ( user => 
+         user && user.avatarPath ? `${environment.domain}/${user.avatarPath}` : null
+      ))
   }
 
   getUserInfo () : Observable<any> {
-    return this.userInfo
+    return this.userInfo.pipe(
+      map ( user => {
+        return user.userName
+      }))
   }
 
   uploadImageProfile (id: string, data: any) {
-    return this.http.post<any>(`${this.endpoint_users}/${id}/add-profile-picture`, data)
+    return this.http.patch<any>(`${this.endpoint_users}/${id}/add-profile-picture`, data)
     .pipe(
       map ((data) => {
         this._userInfo.next(data)

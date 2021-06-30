@@ -15,6 +15,9 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { MainPageComponent } from './content/pages/main-page/main-page.component';
+import { CreatePatientComponent } from './content/pages/patients/create-patient/create-patient.component';
+import { DetailInfoPatientComponent } from './content/pages/patients/detail-info-patient/detail-info-patient.component';
+import { PatientsComponent } from './content/pages/patients/patients.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { MainPageComponent } from './content/pages/main-page/main-page.component
     MainLayoutComponent,
     NavbarComponent,
     MainPageComponent,
+    CreatePatientComponent,
+    DetailInfoPatientComponent,
+    PatientsComponent,
   ],
   imports: [
     BrowserModule,
