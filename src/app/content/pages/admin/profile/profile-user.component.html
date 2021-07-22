@@ -5,7 +5,7 @@
       <div class="row mb-3">
         <div class="col-md-auto container-image">
           <img
-          *ngIf="domain; else defaultAvatar"
+            *ngIf="domain; else defaultAvatar"
             class="rounded-circle mx-auto d-block"
             [src]="domain"
             alt="user avatar"
@@ -22,7 +22,7 @@
             />
           </ng-template>
           <div class="photo-input">
-             <input
+            <input
               class="cursor-pointer"
               type="file"
               accept="image/jpeg,image/jpg,image/png"
@@ -36,42 +36,114 @@
             </label>
           </div>
         </div>
-        <div class="col col-md-lg-8 mx-auto " >
-           <p class="card-text text-center mt-3">{{userName}}</p>
-
-        <form class="mp-0" [formGroup]="userInfo" role="name">
-          <div class="form-group mb-50">
-            <input
-              type="text"
-              formControlName="firstName"
-              class="form-control"
-              placeholder="First Name"
-            />
-          </div>
-          <div class="form-group mb-50">
-            <input
-              type="text"
-              formControlName="lastName"
-              class="form-control"
-              placeholder="Last Name"
-            />
-          </div>
-          <div class="form-group mb-50">
-            <input
-              type="text"
-              formControlName="speciality"
-              class="form-control"
-              placeholder="Speciality"
-            />
-          </div>
-        </form>
+        <div class="col col-md-lg-8 mx-auto">
+          <p class="card-text text-center mt-3">{{ userName }}</p>
+          <form
+            class="mp-0"
+            [formGroup]="userInfo"
+            role="name"
+            (ngSubmit)="editUserData()"
+            *ngIf="isForm"
+          >
+            <div class="form-group mb-50">
+              <label for="username" class="control-label">First name</label>
+              <input
+                type="text"
+                id="firstName"
+                formControlName="firstName"
+                class="form-control"
+                placeholder="First Name"
+              />
+              <span
+                *ngIf="
+                  !userInfo.get('firstName').valid &&
+                  userInfo.get('firstName').touched
+                "
+                class="text-danger"
+              >
+                <span
+                  *ngIf="
+                    userInfo.get('firstName').errors['hasEnglishLetters'] ||
+                    userInfo.get('firstName').errors['minlength']
+                  "
+                  class="is-invalid"
+                  >This first name is incorrect!</span
+                >
+                <span *ngIf="userInfo.get('firstName').errors['required']"
+                  >This field is required!</span
+                >
+              </span>
+            </div>
+            <div class="form-group mb-50">
+              <label for="username" class="control-label">Last name</label>
+              <input
+                type="text"
+                id="lastName"
+                formControlName="lastName"
+                class="form-control"
+                placeholder="Last Name"
+              />
+              <span
+                *ngIf="
+                  !userInfo.get('lastName').valid &&
+                  userInfo.get('lastName').touched
+                "
+                class="text-danger"
+              >
+                <span
+                  *ngIf="
+                    userInfo.get('lastName').errors['hasEnglishLetters'] ||
+                    userInfo.get('lastName').errors['minlength']
+                  "
+                  class="is-invalid"
+                  >This last name is incorrect!</span
+                >
+                <span *ngIf="userInfo.get('lastName').errors['required']"
+                  >This field is required!</span
+                >
+              </span>
+            </div>
+            <div class="form-group mb-50">
+              <label for="username" class="control-label">Speciality</label>
+              <input
+                type="text"
+                id="speciality"
+                formControlName="speciality"
+                class="form-control"
+                placeholder="Speciality"
+              />
+              <span
+                *ngIf="
+                  !userInfo.get('speciality').valid &&
+                  userInfo.get('speciality').touched
+                "
+                class="text-danger"
+              >
+                <span
+                  *ngIf="
+                    userInfo.get('speciality').errors['hasEnglishLetters'] ||
+                    userInfo.get('speciality').errors['minlength']
+                  "
+                  class="is-invalid"
+                  >This speciality is incorrect!</span
+                >
+                <span *ngIf="userInfo.get('speciality').errors['required']"
+                  >This field is required!</span
+                >
+              </span>
+            </div>
+            <div class="d-flex justify-content-center mb-3">
+              <button
+                type="submit"
+                class="btn btn-primary col-4"
+                [disabled]="userInfo.invalid"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-      </div>
-    </div>
-    <div class="d-flex justify-content-center mb-3">
-      <button type="button" class="btn btn-primary col-4" (click)="createEditUser()">
-        Save
-      </button>
     </div>
   </div>
 </div>

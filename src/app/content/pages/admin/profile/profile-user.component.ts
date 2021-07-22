@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserService } from '../../../../services/user.service';
-import { AuthService } from '../../../../services/auth.service';
+import { UserService } from '@services/user.service';
+import { AuthService } from '@services/auth.service';
 import { environment } from '../../../../../environments/aws.environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { map, switchMap, first } from 'rxjs/operators';
 
 @Component({
@@ -16,24 +17,16 @@ export class ProfileUserComponent implements OnInit {
   domain: string;
   userId: string;
   userName: string;
-  isEditing: boolean;
+  isForm: boolean;
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
   ) {
-    this.isEditing = false;
+    this.isForm = false;
   }
 
   ngOnInit(): void {
-    this.userInfo = new FormGroup({
-      firstName: new FormControl(null, [Validators.required, Validators.email]),
-      lastName: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-      speciality: new FormControl(null, [Validators.required]),
-    });
     this.authService
       .getCurrentUserId()
       .pipe(
@@ -41,8 +34,10 @@ export class ProfileUserComponent implements OnInit {
           return this.userService.fetchUserById(id);
         }),
         map((user) => {
+          const { firstName, lastName, speciality } = user;
           this.userId = user.id;
-          this.userName = user.userName
+          this.userName = user.userName;
+          this.initUserForm(firstName, lastName, speciality);
           return user.avatarPath;
         }),
       )
@@ -51,9 +46,41 @@ export class ProfileUserComponent implements OnInit {
         {
           if (avatar) {
             this.domain = `${environment.domain}/${avatar}`;
+          }
         }
-      }
       });
+  }
+
+  initUserForm(
+    firstName: string = '',
+    lastName: string = '',
+    speciality: string = '',
+  ) {
+    console.log('init form');
+    this.userInfo = new FormGroup({
+      firstName: new FormControl(firstName, [
+        Validators.required,
+        Validators.minLength(3),
+        CustomValidators.patternValidator(/^[A-Za-z]+$/, {
+          hasEnglishLetters: true,
+        }),
+      ]),
+      lastName: new FormControl(lastName, [
+        Validators.required,
+        Validators.minLength(3),
+        CustomValidators.patternValidator(/^[A-Za-z]+$/, {
+          hasEnglishLetters: true,
+        }),
+      ]),
+      speciality: new FormControl(speciality, [
+        Validators.required,
+        Validators.minLength(3),
+        CustomValidators.patternValidator(/^[A-Za-z]+$/, {
+          hasEnglishLetters: true,
+        }),
+      ]),
+    });
+    this.isForm = true;
   }
 
   selectFile(event) {
@@ -71,7 +98,9 @@ export class ProfileUserComponent implements OnInit {
     }
   }
 
-  createEditUser () {
-    console.log(this.userInfo.value);
+  editUserData() {
+    this.userService
+      .editUserData(this.userId, this.userInfo.value)
+      .subscribe((data) => console.log('form data', data));
   }
 }

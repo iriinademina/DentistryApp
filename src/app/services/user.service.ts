@@ -36,27 +36,6 @@ export class UserService {
     );
   }
 
-  uploadFile(file) {
-    return this.http.post<any>(
-      ' https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry/upload-file',
-      file,
-      {
-        params: new HttpParams().set('fileName', file.name),
-        reportProgress: true,
-      },
-    );
-  }
-
-  getFile(file) {
-    return this.http.get<any>(
-      '  https://clmc8x54pg.execute-api.us-east-2.amazonaws.com/dev/dentistry/upload-file',
-      {
-        params: new HttpParams().set('fileName', file.name),
-        reportProgress: true,
-      },
-    );
-  }
-
   createUser(data: any) {
     const newHttpClient = new HttpClient(this.httpBackend);
     return newHttpClient.post<any>(`${this.endpoint_users}`, data);
@@ -92,5 +71,9 @@ export class UserService {
         this._userInfo.next(data)
         return data
       }));
+    }
+
+    editUserData ( id: string, data: any ) {
+      return this.http.patch<any>(`${this.endpoint_users}/${id}/update-user-data`, data)
     }
 }
