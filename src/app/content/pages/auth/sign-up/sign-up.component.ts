@@ -35,13 +35,14 @@ export class SignUpComponent implements OnInit {
 
   async onSubmit() {
     const user = await this.authService.signUp({
-      username: this.auth.value.userName,
+      userName: this.auth.value.userName,
       email: this.auth.value.email,
       password: this.auth.value.password,
     });
     this.userService
       .createUser({ userName: user.user.username, id: user.userSub })
-      .subscribe((data) => console.log(data));
-    this._router.navigate(['auth/confirm']);
+      .subscribe((data) => {
+        this._router.navigate(['auth/confirm']);
+      });
   }
 }

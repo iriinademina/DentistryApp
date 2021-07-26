@@ -15,8 +15,8 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private _router: Router,
-     private authService: AuthService,
-     private userService: UserService
+    private authService: AuthService,
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -28,15 +28,16 @@ export class SignInComponent implements OnInit {
 
   async onSubmit() {
     try {
-     const user = await this.authService.signIn(
+      const user = await this.authService.signIn(
         this.signInForm.value.email,
         this.signInForm.value.password,
       );
-      this.userService.fetchUserById(user.attributes.sub)
-      .pipe(first()).subscribe ( 
-        data => { console.log('user profile', data)
-        this._router.navigate(['/'])
-      });
+      this.userService
+        .fetchUserById(user.attributes.sub)
+        .pipe(first())
+        .subscribe((data) => {
+          this._router.navigate(['/']);
+        });
     } catch (err) {
       console.log(err);
     }

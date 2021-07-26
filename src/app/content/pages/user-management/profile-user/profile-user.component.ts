@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '@services/user.service';
 import { AuthService } from '@services/auth.service';
 import { environment } from '../../../../../environments/aws.environment';
@@ -9,9 +9,10 @@ import { map, switchMap, first } from 'rxjs/operators';
 @Component({
   selector: 'app-profile-user',
   templateUrl: './profile-user.component.html',
-  styleUrls: ['./profile-user.component.scss'],
+  styleUrls: ['./profile-user.component.css']
 })
 export class ProfileUserComponent implements OnInit {
+
   public userInfo: FormGroup;
   selectedFiles: File;
   domain: string;
@@ -103,4 +104,5 @@ export class ProfileUserComponent implements OnInit {
       .editUserData(this.userId, this.userInfo.value)
       .subscribe((data) => console.log('form data', data));
   }
+
 }

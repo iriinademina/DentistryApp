@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../shared/models/user.model';
+import { AuthData } from '../shared/models/user.model';
 import Auth from '@aws-amplify/auth';
 import { Hub } from '@aws-amplify/core';
 import { Subject, Observable } from 'rxjs';
@@ -24,9 +24,9 @@ export class AuthService {
       }
     });
   }
-  signUp(user: User): Promise<CognitoUser | any> {
-    return Auth.signUp({
-      username: user.username,
+  signUp(user: AuthData): Promise<CognitoUser | any> {
+    return Auth.signUp({  
+      username: user.userName,
       password: user.password,
       attributes: {
         email: user.email,
@@ -49,11 +49,11 @@ export class AuthService {
     this.statusLoggedIn = false;
   }
 
-  async getToken() {
+  async getToken() : Promise<string> {
     return await (await Auth.currentSession()).getIdToken().getJwtToken();
   }
 
-  async getAuthUserId () : Promise<any> {
+  async getAuthUserId () : Promise<string> {
     const user = await Auth.currentAuthenticatedUser();
     return user.attributes.sub
   }

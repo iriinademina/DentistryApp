@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit {
   }
 
   goOnProfile() {
-    this._router.navigate(['admin/profile'])
+    this._router.navigate(['user/profile'])
      
   }
 
