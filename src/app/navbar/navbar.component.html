@@ -33,7 +33,7 @@
         <div ngbDropdown display="dynamic" class="d-inline-block">
           <img
             ngbDropdownToggle
-            *ngIf="userAvatar$ | async as userAvatar ; else defaultAvatar"
+            *ngIf="(userAvatar$ | async) || (isRequestAvatar$ | async) as userAvatar ; else defaultAvatar"
             class="rounded-circle cursor-pointer"
             [src]="userAvatar"
             height="40"

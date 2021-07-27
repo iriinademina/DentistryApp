@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs-compat/Observable';
-import { map, switchMap, first } from 'rxjs/operators';
+import { map, switchMap, first, tap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,50 +12,39 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   userId: string;
-  userAvatar$: Observable<any>;
-  userName: any;
+  userAvatar$: Observable<string>;
+  isRequestAvatar$: Observable<any>;
   isAvatar: boolean;
-  isUserName: boolean;
- 
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private activatedroute:ActivatedRoute,
     private _router: Router,
   ) {
     this.isAvatar = false;
-    this.isUserName = false;
   }
 
   ngOnInit(): void {
     this.userAvatar$ = this.userService.getUserAvatar().pipe(
       map((link) => {
-          this.isAvatar = true;
-          console.log('navbar link', link)
-          return link;
-        })
+        this.isAvatar = true;
+        return link;
+      }),
     );
-    
+
     if (!this.isAvatar) {
-      this.authService
-        .getCurrentUserId()
-        .pipe(
-          switchMap((id) => {
-            return this.userService.fetchUserById(id).pipe(
-              map((user) => {
-                return this.userService.getUserAvatar();
-              }),
-            );
-          }),
-        )
-       .pipe(first())
-       .subscribe((val) => console.log(val));
+      this.isRequestAvatar$ = this.authService.getCurrentUserId().pipe(
+        switchMap((id) => {
+          return this.userService
+            .fetchUserById(id)
+            .pipe(map((user) => user.avatarPath));
+        }),
+      );
     }
   }
 
   goOnProfile() {
-    this._router.navigate(['user/profile'])
-     
+    this._router.navigate(['user/profile']);
   }
 
   async logOut() {
